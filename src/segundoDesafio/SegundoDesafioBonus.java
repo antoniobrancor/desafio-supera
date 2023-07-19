@@ -42,12 +42,18 @@ public class SegundoDesafioBonus {
             return 10;
         } else if (centavos / 5 > 0) {
             return 5;
-        } else {
+        } else if(centavos > 0){
             return 1;
+        } else if(centavos == 0){
+            return 0;
         }
+        return 0;
     }
 
     private static void quantidadeNotas(int centavos, int notaDaVez) {                      //Método recursivo que usa o método saberNotaDaVez para determinar qual o funcionamento correto
+        if(centavos == 0){
+            return;                                                                         //Breakpoint da recursão
+        }
         int qntNota = (centavos / (notaDaVez));                                             //Calcula a quantidade de notas que são necessarias.
         centavos -= qntNota * notaDaVez;                                                    //Atualiza o restante em centavos subtraindo o que já foi contado, preparando para a próxima iteração
 
@@ -61,7 +67,8 @@ public class SegundoDesafioBonus {
             System.out.println(qntNota + "  moeda(s) de R$ 00.0" + notaDaVez);
             quantidadeNotas(centavos, saberNotaDaVez(centavos));
         } else if (notaDaVez == 1) {                                                        //Funcionamento caso a moeda da vez seja a de 1 centavo, como é o menor valor possivel, não é necessário chamar o método novamente,
-            System.out.println(qntNota + "  moeda(s) de R$ 00.0" + notaDaVez);              // encerrando a recursividade, mas sempre imprime 0.01 já q é o break point, enquanto os outros valores que não sao utilzados não são impressos
+            System.out.println(qntNota + "  moeda(s) de R$ 00.0" + notaDaVez);
+            quantidadeNotas(centavos,saberNotaDaVez(centavos));
         } else {
             System.out.println(qntNota + "  nota(s) de R$ " + notaDaVez / 100 + ".00");     //Funcionamento caso a moeda da vez seja nota
             quantidadeNotas(centavos, saberNotaDaVez(centavos));
